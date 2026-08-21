@@ -4,7 +4,7 @@
 
 
 const assert = require('assert'); 
-const {calculateBorrowingPower} = require('./borrowingCalculator');
+const {calculateBorrowingPower} = require('../src/borrowingCalculator');
 
 describe('Term Deposit Calculator Tests', () => {
 
