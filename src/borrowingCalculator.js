@@ -30,7 +30,7 @@ function getHEM(income, dependents) {
 /**
  * Calculates the total borrowing power amount and the monthly repayment configuration
  */
-function calculateBorrowingPower(income, dependents, expenses, creditLimits, annualAssessmentRate) {
+function calculateBorrowingPower(income, dependents, expenses, creditLimits) {
     // 1. Calculate Net Monthly Income after tax deductions
     const annualTax = getTax(income);
     const netMonthlyIncome = (income - annualTax) / 12;
@@ -50,8 +50,11 @@ function calculateBorrowingPower(income, dependents, expenses, creditLimits, ann
         return { maxLoanAmount: 0, monthlyRepayment: 0 };
     }
 
+    // Banks assess loans using base rate + buffer for safety
+    const assessmentRate = INTEREST_RATE + ASSESSMENT_RATE_BUFFER;
+
     // 5. Calculate the monthly interest rate
-    const monthlyRate = (annualAssessmentRate / 100) / 12;
+    const monthlyRate = (assessmentRate / 100) / 12;
 
     // 6. Calculate maximum borrowing power using the following formula:
     // P = M * (1 - (1 + R)^-N) / R
@@ -75,15 +78,13 @@ function runConsoleMode() {
             rl.question("Declared Monthly Expenses: $", (expenses) => {
                 rl.question("Total Credit Card Limits: $", (creditLimits) => {
                     
-                    // Banks assess loans using base rate + buffer for safety
-                    const assessmentRate = INTEREST_RATE + ASSESSMENT_RATE_BUFFER;
+                    
 
                     const result = calculateBorrowingPower(
                         parseFloat(income),
                         parseInt(dependents),
                         parseFloat(expenses),
-                        parseFloat(creditLimits),
-                        assessmentRate
+                        parseFloat(creditLimits)
                     );
 
                     console.log("\n--- Calculation Summary ---");
