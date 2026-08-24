@@ -11,10 +11,6 @@
 
 import { INTEREST_RATE } from './constants.js';
 
-// Global constant for mortgage simulation
-const LOAN_TERM_MONTHS = 360; // 30 Years
-const ASSESSMENT_RATE_BUFFER = 3.0; // 3.0% buffer added to interest rates
-
 // Legacy placeholder functions to replace with API calls
 function getTax(income) {
     // REPLACE THIS
@@ -32,6 +28,8 @@ function getHEM(income, dependents) {
  * Calculates the total borrowing power amount and the monthly repayment configuration
  */
 export function calculateBorrowingPower(income, dependents, expenses, creditLimits) {
+    const loanTermMonths = 360; // 30 Years
+    const assessmentRateBuffer = 3.0; // 3.0% buffer added to interest rates
     // 1. Calculate Net Monthly Income after tax deductions
     const annualTax = getTax(income);
     const netMonthlyIncome = (income - annualTax) / 12;
@@ -52,14 +50,14 @@ export function calculateBorrowingPower(income, dependents, expenses, creditLimi
     }
 
     // Banks assess loans using base rate + buffer for safety
-    const assessmentRate = INTEREST_RATE + ASSESSMENT_RATE_BUFFER;
+    const assessmentRate = INTEREST_RATE + assessmentRateBuffer;
 
     // 5. Calculate the monthly interest rate
     const monthlyRate = (assessmentRate / 100) / 12;
 
     // 6. Calculate maximum borrowing power using the following formula:
     // P = M * (1 - (1 + R)^-N) / R
-    const maxLoanAmount = maxMonthlyRepayment * ((1 - Math.pow(1 + monthlyRate, - LOAN_TERM_MONTHS)) / monthlyRate);
+    const maxLoanAmount = maxMonthlyRepayment * ((1 - Math.pow(1 + monthlyRate, - loanTermMonths)) / monthlyRate);
 
     return {
         maxLoanAmount: Number(maxLoanAmount.toFixed(2)),

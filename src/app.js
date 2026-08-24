@@ -11,7 +11,7 @@ async function start() {
     const expenses = await rl.question("Declared Monthly Expenses: $");
     const creditLimits = await rl.question("Total Credit Card Limits: $");
 
-    //to do add valadator class for StreamReader output
+    //to do add valadator class for rl.question results
     const loanResult = calculateBorrowingPower(
         income,
         dependents,
