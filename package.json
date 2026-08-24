@@ -1,10 +1,11 @@
 {
+  "type": "module",
   "devDependencies": {
     "mocha": "^11.7.0"
   },
   "scripts": {
     "api": "node src/server.js",
     "test": "mocha test/test_calculator.js",
-    "start": "node src/borrowingCalculator.js"
+    "start": "node src/app"
   }
 }

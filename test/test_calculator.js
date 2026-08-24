@@ -3,8 +3,8 @@
  */
 
 
-const assert = require('assert'); 
-const {calculateBorrowingPower} = require('../src/borrowingCalculator');
+import assert from 'node:assert/strict';
+import { calculateBorrowingPower } from '../src/borrowingCalculator.js';
 
 describe('Term Deposit Calculator Tests', () => {
 

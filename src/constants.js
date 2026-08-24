@@ -1,0 +1,1 @@
+export const INTEREST_RATE = 7.0; // 7.0% baseline interest rate
