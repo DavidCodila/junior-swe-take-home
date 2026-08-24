@@ -27,19 +27,19 @@ function getHEM(income, dependents) {
 /**
  * Calculates the total borrowing power amount and the monthly repayment configuration
  */
-export function calculateBorrowingPower(income, dependents, expenses, creditLimits) {
+export function calculateBorrowingPower(user) {
     const loanTermMonths = 360; // 30 Years
     const assessmentRateBuffer = 3.0; // 3.0% buffer added to interest rates
     // 1. Calculate Net Monthly Income after tax deductions
-    const annualTax = getTax(income);
-    const netMonthlyIncome = (income - annualTax) / 12;
+    const annualTax = getTax(user.income);
+    const netMonthlyIncome = (user.income - annualTax) / 12;
 
     // 2. Determine living expenses (User declared expenses vs HEM baseline, whichever is higher)
-    const baselineHEM = getHEM(income, dependents);
-    const totalLivingExpenses = Math.max(expenses, baselineHEM);
+    const baselineHEM = getHEM(user.income, user.dependents);
+    const totalLivingExpenses = Math.max(user.expenses, baselineHEM);
 
     // 3. Calculate credit card liability (~3% of total limits)
-    const creditCardLiability = creditLimits * 0.03;
+    const creditCardLiability = user.creditLimits * 0.03;
 
     // 4. Calculate monthly repayment capacity
     const maxMonthlyRepayment = netMonthlyIncome - totalLivingExpenses - creditCardLiability;
