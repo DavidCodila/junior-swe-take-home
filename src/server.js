@@ -5,7 +5,7 @@
  * 
  */
 
-const http = require("http");
+import { createServer } from "http";
 
 const PORT = 3000;
 const VALID_PAT = "pat_abcdefghijklmnopqrstuvwxyz0123456789";
@@ -126,7 +126,7 @@ function handleHem(params, res) {
     });
 }
 
-const server = http.createServer((req, res) => {
+const server = createServer((req, res) => {
     if (!authenticate(req, res)) return;
 
     if (req.method !== "GET") {

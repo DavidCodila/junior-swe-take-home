@@ -13,9 +13,39 @@ import { INTEREST_RATE } from './constants.js';
 
 // Legacy placeholder functions to replace with API calls
 function getTax(income) {
-    // REPLACE THIS
-    // Write your TAX API call code here.
-    return Math.round(income * 0.25);
+    return new Promise((resolve) => {
+    fetch("http://localhost:3000/api/tax?income=" + income, {
+            method: 'GET',
+            withCredentials: true,
+            credentials: 'include',
+            headers: {
+                'Authorization': "Bearer pat_abcdefghijklmnopqrstuvwxyz0123456789"
+            }
+        }).then(responseJson => {
+            const reader = responseJson.body.getReader();
+            return new ReadableStream({
+            start(controller) {
+                function push() {
+                reader.read().then(({ done, value }) => {
+                    if (done) {
+                    controller.close();
+                    return;
+                    }
+                    controller.enqueue(value);
+                    push();
+                });
+                }
+                push();
+            }
+            });
+        })
+        .then(stream => new Response(stream))
+        .then(response => response.json())
+        .then(text => resolve(text.tax)) 
+        .catch(error => {
+            throw new Error("Something bad happened: " + error)
+        });
+    })
 }
 
 function getHEM(income, dependents) {
@@ -24,43 +54,49 @@ function getHEM(income, dependents) {
     return 2000 + (dependents * 400);
 }
 
+
 /**
  * Calculates the total borrowing power amount and the monthly repayment configuration
  */
-export function calculateBorrowingPower(user) {
-    const loanTermMonths = 360; // 30 Years
-    const assessmentRateBuffer = 3.0; // 3.0% buffer added to interest rates
-    // 1. Calculate Net Monthly Income after tax deductions
-    const annualTax = getTax(user.income);
-    const netMonthlyIncome = (user.income - annualTax) / 12;
+export async function calculateBorrowingPower(user) {
+    return new Promise((resolve) => {
+        const loanTermMonths = 360; // 30 Years
+        const assessmentRateBuffer = 3.0; // 3.0% buffer added to interest rates
+        // 1. Calculate Net Monthly Income after tax deductions
+        getTax(user.income)
+        .then(annualTax => {
+            const netMonthlyIncome = (user.income - annualTax) / 12;
+            
+            // 2. Determine living expenses (User declared expenses vs HEM baseline, whichever is higher)
+            const baselineHEM = getHEM(user.income, user.dependents);
+            const totalLivingExpenses = Math.max(user.expenses, baselineHEM);
 
-    // 2. Determine living expenses (User declared expenses vs HEM baseline, whichever is higher)
-    const baselineHEM = getHEM(user.income, user.dependents);
-    const totalLivingExpenses = Math.max(user.expenses, baselineHEM);
+            // 3. Calculate credit card liability (~3% of total limits)
+            const creditCardLiability = user.creditLimits * 0.03;
 
-    // 3. Calculate credit card liability (~3% of total limits)
-    const creditCardLiability = user.creditLimits * 0.03;
+            // 4. Calculate monthly repayment capacity
+            const maxMonthlyRepayment = netMonthlyIncome - totalLivingExpenses - creditCardLiability;
 
-    // 4. Calculate monthly repayment capacity
-    const maxMonthlyRepayment = netMonthlyIncome - totalLivingExpenses - creditCardLiability;
+            // Return early if user cannot afford a loan at all
+            if (maxMonthlyRepayment <= 0) {
+                return { maxLoanAmount: 0, monthlyRepayment: 0 };
+            }
 
-    // Return early if user cannot afford a loan at all
-    if (maxMonthlyRepayment <= 0) {
-        return { maxLoanAmount: 0, monthlyRepayment: 0 };
-    }
+            // Banks assess loans using base rate + buffer for safety
+            const assessmentRate = INTEREST_RATE + assessmentRateBuffer;
 
-    // Banks assess loans using base rate + buffer for safety
-    const assessmentRate = INTEREST_RATE + assessmentRateBuffer;
+            // 5. Calculate the monthly interest rate
+            const monthlyRate = (assessmentRate / 100) / 12;
 
-    // 5. Calculate the monthly interest rate
-    const monthlyRate = (assessmentRate / 100) / 12;
+            // 6. Calculate maximum borrowing power using the following formula:
+            // P = M * (1 - (1 + R)^-N) / R
+            const maxLoanAmount = maxMonthlyRepayment * ((1 - Math.pow(1 + monthlyRate, - loanTermMonths)) / monthlyRate);
 
-    // 6. Calculate maximum borrowing power using the following formula:
-    // P = M * (1 - (1 + R)^-N) / R
-    const maxLoanAmount = maxMonthlyRepayment * ((1 - Math.pow(1 + monthlyRate, - loanTermMonths)) / monthlyRate);
-
-    return {
-        maxLoanAmount: Number(maxLoanAmount.toFixed(2)),
-        monthlyRepayment: Number(maxMonthlyRepayment.toFixed(2))
-    };
+            resolve({
+                maxLoanAmount: Number(maxLoanAmount.toFixed(2)),
+                monthlyRepayment: Number(maxMonthlyRepayment.toFixed(2))
+            })
+        });
+    })
+    
 }
