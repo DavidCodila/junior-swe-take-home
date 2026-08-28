@@ -79,7 +79,7 @@ export async function calculateBorrowingPower(user) {
 
             // Return early if user cannot afford a loan at all
             if (maxMonthlyRepayment <= 0) {
-                return { maxLoanAmount: 0, monthlyRepayment: 0 };
+                resolve({ maxLoanAmount: 0, monthlyRepayment: 0 });
             }
 
             // Banks assess loans using base rate + buffer for safety
