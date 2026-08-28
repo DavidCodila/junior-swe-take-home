@@ -1,11 +1,13 @@
-export function getTax(income) {
+const BEARER_PAT = "Bearer pat_abcdefghijklmnopqrstuvwxyz0123456789";
+
+export async function getTax(income) {
     return new Promise((resolve) => {
         fetch("http://localhost:3000/api/tax?income=" + income, {
             method: 'GET',
             withCredentials: true,
             credentials: 'include',
             headers: {
-                'Authorization': "Bearer pat_abcdefghijklmnopqrstuvwxyz0123456789"
+                'Authorization': BEARER_PAT
             }
         }).then(responseJson => {
             const reader = responseJson.body.getReader();
@@ -28,6 +30,42 @@ export function getTax(income) {
         .then(stream => new Response(stream))
         .then(response => response.json())
         .then(text => resolve(text.tax))
+        .catch(error => {
+            throw new Error("Something bad happened: " + error);
+        });
+    });
+}
+
+export async function getHEM(income, dependents) {
+    return new Promise((resolve) => {
+        fetch("http://localhost:3000/api/hem?income=" + income + "&dependents=" + dependents, {
+            method: 'GET',
+            withCredentials: true,
+            credentials: 'include',
+            headers: {
+                'Authorization': BEARER_PAT
+            }
+        }).then(responseJson => {
+            const reader = responseJson.body.getReader();
+            return new ReadableStream({
+                start(controller) {
+                    function push() {
+                        reader.read().then(({ done, value }) => {
+                            if (done) {
+                                controller.close();
+                                return;
+                            }
+                            controller.enqueue(value);
+                            push();
+                        });
+                    }
+                    push();
+                }
+            });
+        })
+        .then(stream => new Response(stream))
+        .then(response => response.json())
+        .then(text => resolve(text.hem))
         .catch(error => {
             throw new Error("Something bad happened: " + error);
         });
