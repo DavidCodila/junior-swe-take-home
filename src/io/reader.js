@@ -1,15 +1,23 @@
 import * as readline from 'node:readline/promises';
+import { isValidFloat, isValidInt } from './validator.js';
 
-//to do add valadator class for rl.question results
+const RL = readline.createInterface({ input: process.stdin, output: process.stdout });
+
 export async function getNewUser() {
-    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+    const income = await obtainValueFromUser("Gross Annual Income: $", isValidFloat);
+    const dependents = await obtainValueFromUser("Number of Dependents: ", isValidInt);
+    const expenses = await obtainValueFromUser("Declared Monthly Expenses: $", isValidFloat);
+    const creditLimits = await obtainValueFromUser("Total Credit Card Limits: $", isValidFloat);
 
-    const income = await rl.question("Gross Annual Income: $");
-    const dependents = await rl.question("Number of Dependents: ");
-    const expenses = await rl.question("Declared Monthly Expenses: $");
-    const creditLimits = await rl.question("Total Credit Card Limits: $");
-
-    rl.close();
+    RL.close();
 
     return {income, dependents, expenses, creditLimits}
+}
+
+async function obtainValueFromUser(prompt, validate) {
+    do {
+        var value = await RL.question(prompt);
+    }
+    while (!validate(value));
+    return value;
 }
