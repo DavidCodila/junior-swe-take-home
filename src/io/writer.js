@@ -1,4 +1,4 @@
-import { INTEREST_RATE } from './constants.js';
+import { INTEREST_RATE } from '../constants.js';
 
 export function intro() {
     console.log("Mortgage Borrowing Power Calculator");

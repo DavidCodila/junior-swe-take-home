@@ -1,6 +1,6 @@
-import { getNewUser } from './consoleReader.js';
+import { getNewUser } from './io/reader.js';
 import { calculateBorrowingPower } from './calculator/borrowingCalculator.js';
-import { intro, summary } from "./logger.js";
+import { intro, summary } from "./io/writer.js";
 
 async function start() {
     intro();
