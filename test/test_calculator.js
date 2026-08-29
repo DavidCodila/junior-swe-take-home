@@ -4,7 +4,7 @@
 
 
 import assert from 'node:assert/strict';
-import { calculateBorrowingPower } from '../src/borrowingCalculator.js';
+import { calculateBorrowingPower } from '../src/calculator/borrowingCalculator.js';
 
 describe('Term Deposit Calculator Tests', () => {
 

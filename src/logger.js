@@ -7,6 +7,10 @@ export function intro() {
 
 export function summary(loanResult) {
     console.log("\n--- Calculation Summary ---");
-    console.log(`Maximum Borrowing Power at ${INTEREST_RATE}%: $${loanResult.maxLoanAmount.toLocaleString()}`);
-    console.log(`Assumed Monthly Mortgage Repayment: $${loanResult.monthlyRepayment.toLocaleString()} over 30 years`);
+    console.log(`Maximum Borrowing Power at ${INTEREST_RATE}%: $${toFormattedNumber(loanResult.maxLoanAmount).toLocaleString()}`);
+    console.log(`Assumed Monthly Mortgage Repayment: $${toFormattedNumber(loanResult.monthlyRepayment).toLocaleString()} over 30 years`);
+}
+
+function toFormattedNumber(value) {
+    return Number(value.toFixed(2));
 }
