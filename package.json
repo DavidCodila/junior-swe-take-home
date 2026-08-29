@@ -5,7 +5,8 @@
   },
   "scripts": {
     "api": "node src/server.js",
-    "test": "mocha test/test_calculator.js",
-    "start": "node src/app"
+    "test": "mocha test/**/**test.js",
+    "start": "node src/app",
+    "coverage": "node --experimental-test-coverage --test"
   }
 }

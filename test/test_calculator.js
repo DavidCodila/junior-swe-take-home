@@ -1,8 +1,3 @@
-/**
- * Borrowing Power Calculator Test Suite
- */
-
-
 import assert from 'node:assert/strict';
 import { calculateBorrowingPower } from '../src/calculator/borrowingCalculator.js';
 
