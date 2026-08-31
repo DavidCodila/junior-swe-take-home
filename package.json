@@ -1,12 +1,21 @@
 {
   "type": "module",
   "devDependencies": {
-    "mocha": "^11.7.0"
+    "@babel/core": "^8.0.1",
+    "@babel/preset-env": "^8.0.2",
+    "@istanbuljs/esm-loader-hook": "^0.3.0",
+    "babel-jest": "^30.5.0",
+    "jest": "^30.5.0",
+    "mocha": "^11.8.0",
+    "nyc": "^18.0.0"
+  },
+  "nyc": {
+    "all": true
   },
   "scripts": {
     "api": "node src/server.js",
     "test": "mocha test/**/**test.js",
     "start": "node src/app",
-    "coverage": "node --experimental-test-coverage --test"
+    "coverage": "nyc mocha test/**/**test.js"
   }
 }
