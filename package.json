@@ -1,11 +1,6 @@
 {
   "type": "module",
   "devDependencies": {
-    "@babel/core": "^8.0.1",
-    "@babel/preset-env": "^8.0.2",
-    "@istanbuljs/esm-loader-hook": "^0.3.0",
-    "babel-jest": "^30.5.0",
-    "jest": "^30.5.0",
     "mocha": "^11.8.0",
     "nyc": "^18.0.0"
   },
