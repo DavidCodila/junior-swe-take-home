@@ -11,6 +11,7 @@
     "api": "node src/server.js",
     "test": "mocha test/**/**test.cjs",
     "start": "node src/app",
-    "coverage": "nyc mocha test/**/**test.cjs"
+    "coverage": "nyc mocha test/**",
+    "coverageForLogic": "nyc mocha test/api/logic.test.cjs"
   }
 }

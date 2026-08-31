@@ -9,7 +9,6 @@ export async function apiCall(url) {
         .then(response => extractStream(response.body.getReader()))
         .then(stream => new Response(stream))
         .then(response => resolve(response.json()))
-        .catch(error => "API call error: " + error);
     });
 }
 
