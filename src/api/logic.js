@@ -1,11 +1,10 @@
-const BEARER_PAT = "Bearer pat_abcdefghijklmnopqrstuvwxyz0123456789";
-const REQUEST_INFO = { 
-    method: 'GET', withCredentials: true, credentials: 'include', headers: {'Authorization': BEARER_PAT} 
-}
-
 export async function apiCall(url) {
+    const bearerPAT = "Bearer pat_abcdefghijklmnopqrstuvwxyz0123456789";
+    const requestInfo = { 
+        method: 'GET', withCredentials: true, credentials: 'include', headers: {'Authorization': bearerPAT} 
+    }
     return new Promise((resolve) => {
-        fetch(url, REQUEST_INFO)
+        fetch(url, requestInfo)
         .then(response => extractStream(response.body.getReader()))
         .then(stream => new Response(stream))
         .then(response => resolve(response.json()))

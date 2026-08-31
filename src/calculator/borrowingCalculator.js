@@ -17,7 +17,7 @@ export async function calculateBorrowingPower(user) {
                     loanResult.monthlyRepayment = maxMonthlyRepayment;
                 }
 
-                resolve(loanResult)
+                resolve(loanResult);
             })
         });
     })

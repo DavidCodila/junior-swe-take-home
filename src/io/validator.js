@@ -6,5 +6,5 @@ function isNotEmpty(value) {
 }
 
 function isANumberGreaterThanOrEqualToZero(value) {
-    return (Number(value) >= 0) && isNotEmpty(value)
+    return isNotEmpty(value) && (Number(value) >= 0); 
 }
