@@ -1,5 +1,5 @@
 const assert = require('node:assert/strict');
-const calls = require('../../src/api/calls.js')
+const calls = require('../../src/api/calls.js');
 
 describe('API getAnnualTax call tests', () => {
     const firstTaxBracket = 20000;

@@ -2,7 +2,7 @@ export const isValidFloat = (value) => !isNaN(value) && isANumberGreaterThanOrEq
 export const isValidInt = (value) => Number.isInteger(Number(value)) && isANumberGreaterThanOrEqualToZero(value);
 
 function isNotEmpty(value) {
-    return !(value.includes(' ') || value == "");
+    return !(value.toString().includes(' ') || value == "");
 }
 
 function isANumberGreaterThanOrEqualToZero(value) {

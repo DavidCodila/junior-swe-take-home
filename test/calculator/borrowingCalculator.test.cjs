@@ -1,7 +1,7 @@
 const assert = require('node:assert/strict');
-const borrowingCalculator = require('../../src/calculator/borrowingCalculator.js')
+const borrowingCalculator = require('../../src/calculator/borrowingCalculator.js');
 
-describe('Term Deposit Calculator Tests', () => {
+describe('Borrowing Calculator Tests', () => {
 
   it('should calculate borrowing power for standard values', () => {
     borrowingCalculator.calculateBorrowingPower({income : 120000, dependents : 2, expenses : 3000, creditLimits : 10000})
