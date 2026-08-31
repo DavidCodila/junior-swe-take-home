@@ -1,76 +1,46 @@
 # Borrowing Power Calculator
 
-Hello and thanks so much for taking the time to do the Ferocia Junior Engineering Code Exercise.
+This repository is my attempt to complete the Ferocia Junior Engineering Code Exercise, namely: Borrowing Power Calculator. The real "Borrowing Power Calculator" can be found here: (https://www.bendigobank.com.au/personal/loans/calculators/borrowing-power/). 
 
-This borrowing power calculator written in Javascript was started by one of our juniors, Gen (her full name is “Gen A. Eye”), but she she went on leave before she could finish it…
+# Technology Stack
 
-We need you to progress the code in her absence. Once you’ve submitted your work and we’ve reviewed it, you’ll sit down and explain the code to Gens team members (our interviewers) in a pairing session.
+Node.js, JavaScript, npm, Mocha.js and nyc.
 
-Keep in mind that we’ll expect you to be able to explain and expand on the code you submit.
+# Requirements
 
-If you haven’t done much Javascript before don’t worry. We’ll take your experience into account, just give it your best shot. 
+- The getTax(income), getHEM(income, dependents) functions were to be replaced by API calls. The code for the APIs is found in the server.js file and information on the server.js file is found within the server.md file.
+- Refactor the calculator code to make it manageable.
+- Test suite to pass with full coverage.
 
-You can see our online borrowing power calculator (Gens project is simplified so dont expect the number to match perfectly) to see how it work (https://www.bendigobank.com.au/personal/loans/calculators/borrowing-power/).
+# Prerequisite
 
-## Please try to complete the following:
+- Node.js
 
-### Replace the two placeholder functions
-The code needs to calculate tax on income and a HEM (Household Expense Measure) value.
-Currently this is performed by placeholder code in the following functions:
-    getTax(income)
-    getHEM(income, dependents)
-You will need to replace the code in both with API calls.
-We have provided a server.js which can you run locally to expose the following 2 development endpoints:
-    http://localhost:3000/api/tax?income=[income]
-    http://localhost:3000/api/hem?income=[income]&dependents=[dependents]
-Both return JSON and require an authentication header with a valid PAT (Personal Access Token), see server.md for full documentation including the development PAT.
+# Setup
+- git clone https://github.com/DavidCodila/junior-swe-take-home.git
+- cd junior-swe-take-home
+- npm install
+- (---in a new terminal---) npm run api 
+- npm start
 
-### Make it manageable
-Gen planned to pull all the calculator functions into a class so she could extend it later, but we’ll leave it up to you to choose the approach (a well-formed class, an orchestrator function, a factory/closure pattern, or whatever)
+# Testing
 
-### Test coverage
-Of course we’ll need the test suite to pass and have full coverage.
+Unit tests: 
+- npm test
 
+Unit tests with coverage: 
+- npm run coverage
 
+# Exclusions
 
-## Rules:
+- It was determined that the scope of the assessment was pertaining to the refinement and enhancement of the codebase, save the server.js file. Therefore, the server.js file has only been touched to maintain file importing standards, and no tests were written for it.
+- As app.js was a function with no parameters, no variables and only 5 lines long, it was determined to be excluded from testing. 
+- Due to the complexity involved with testing console and readline methods and functions, the reader.js and writer.js files were also not tested. 
 
-Use whatever tools and resources help you get the job done. That includes AI, documentation, Stack Overflow, or anything else. What matters is that you understand every line you submit. In the follow-up pairing session, we'll ask you to walk us through your code, explain your decisions, and make changes on the fly - without an AI in Agent mode. If you can't do that confidently, it will count against you. The goal isn't to catch you out, it's to understand how you think.
+## Justification
 
-## Setup
+It was determined, as I have very limited knowledge of JavaScript and Node.js, that if I were to embark on the above mentioned exclusions, then I would have well exceeded the 8 hour limit of the assignment. I would be very happy to provide another code base using OOP with Dependency Injection, mocking all the required objects if desired.
 
-Make sure you have Node.js installed.
+## PS
 
-Install dependencies:
-```
-npm install
-```
-
-## Server
-
-You wil need to run the development API in it's own terminal window.
-(The server will be available at http://localhost:3000/).
-To start the server run the following command:
-```
-npm run api
-```
-Note: You can stop the server with Ctrl+C
-
-
-## Running
-
-Run the calculator with:
-```
-npm start
-```
-
-
-## Testing
-
-Run tests with:
-```
-npm test
-```
-
-
-
+I hope you enjoy reading the code as much as I enjoyed writing it!
