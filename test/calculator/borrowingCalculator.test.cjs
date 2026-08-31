@@ -1,5 +1,5 @@
 const assert = require('node:assert/strict');
-const borrowingCalculator = require('../src/calculator/borrowingCalculator.js')
+const borrowingCalculator = require('../../src/calculator/borrowingCalculator.js')
 
 describe('Term Deposit Calculator Tests', () => {
 
