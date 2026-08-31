@@ -37,7 +37,7 @@ Unit tests with coverage:
 - As app.js was a function with no parameters, no variables and only 5 lines long, it was determined to be excluded from testing. 
 - Due to the complexity involved with testing console and readline methods and functions, the reader.js and writer.js files were also not tested. 
 
-## Justification
+# Justification
 
 It was determined, as I have very limited knowledge of JavaScript and Node.js, that if I were to embark on the above mentioned exclusions, then I would have well exceeded the 8 hour limit of the assignment. I would be very happy to provide another code base using OOP with Dependency Injection, mocking all the required objects if desired.
 
