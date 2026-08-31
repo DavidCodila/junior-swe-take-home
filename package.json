@@ -11,7 +11,8 @@
     "test": "mocha test/**/**test.cjs",
     "start": "node src/app",
     "coverage": "nyc mocha test/**",
-    "coverageForLogic": "nyc mocha test/calculator/mathsHelper.test.cjs"
+    "coverageForLogic": "nyc mocha test/api/logic.test.cjs",
+    "coverageForMathsHelper": "nyc mocha test/calculator/mathsHelper.test.cjs"
   },
   "dependencies": {
     "nyc": "^18.0.0"
