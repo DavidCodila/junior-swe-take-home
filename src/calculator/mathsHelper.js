@@ -1,3 +1,4 @@
+import { getAnnualTax, getHEM } from '../api/calls.js';
 import { INTEREST_RATE } from '../constants.js';
 
 export const MONTHS_PER_YEAR = 12;
@@ -17,17 +18,18 @@ function calculateCreditCardLiability(creditLimits) {
     return creditLimits * creditCardLiabilityFactor;
 }
 
-function calculateNetMonthlyIncome(income, annualTax) {
+async function calculateNetMonthlyIncome(income) {
+    const annualTax = await getAnnualTax(income);
     return (income - annualTax) / MONTHS_PER_YEAR;
 }
 
-function calculateTotalLivingExpenses(expenses, hem) {
-    return Math.max(expenses, hem);
+async function calculateTotalLivingExpenses(user) {
+    return Math.max(user.expenses, await getHEM(user));
 }
 
-export function calculateMaxMonthlyRepayment(user, annualTax, hem) {
+export async function calculateMaxMonthlyRepayment(user) {
     // Repayment = income - expenses - liability 
-    return calculateNetMonthlyIncome(user.income, annualTax)
-        - calculateTotalLivingExpenses(user.expenses, hem)
+    return await calculateNetMonthlyIncome(user.income)
+        - await calculateTotalLivingExpenses(user)
         - calculateCreditCardLiability(user.creditLimits);
 }
