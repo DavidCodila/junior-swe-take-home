@@ -1,4 +1,3 @@
-import { getHEM, getAnnualTax } from '../api/calls.js';
 import { calculateMaxMonthlyRepayment, calculateMaxLoanAmount } from './mathsHelper.js';
 
 /**
