@@ -1,12 +1,14 @@
 import { getNewUser } from './io/reader.js';
 import { calculateBorrowingPower } from './calculator/borrowingCalculator.js';
-import { intro, summary } from "./io/writer.js";
+import { INTEREST_RATE } from './constants.js';
+import { Writer } from './writer.js';
 
 async function start() {
-    intro();
+    const writer = new Writer(INTEREST_RATE)
+    writer.intro();
     let user = await getNewUser();
     let loanResult = await calculateBorrowingPower(user);
-    summary(loanResult);
+    writer.summary(loanResult);
 }
 
 start();
