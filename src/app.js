@@ -1,12 +1,12 @@
 import * as readline from 'node:readline/promises';
 import { INTEREST_RATE } from './constants.js';
-import { Writer } from './writer.js';
-import { Reader } from './reader.js';
-import { Validator } from './validator.js';
-import { BorrowingPowerCalculator } from './borrowingPowerCalculator.js';
-import { ApiCaller } from './apiCaller.js';
-import { MathsHelper } from './mathsHelper.js';
-import { ApiProvider } from './apiProvider.js';
+import { Writer } from './io/writer.js';
+import { Reader } from './io/reader.js';
+import { Validator } from './io/validator.js';
+import { BorrowingPowerCalculator } from './calculator/borrowingPowerCalculator.js';
+import { ApiCaller } from './api/apiCaller.js';
+import { MathsHelper } from './calculator/mathsHelper.js';
+import { ApiProvider } from './api/apiProvider.js';
 
 async function start() {
     const RL = readline.createInterface({ input: process.stdin, output: process.stdout });

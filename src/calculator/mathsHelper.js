@@ -1,4 +1,4 @@
-import { INTEREST_RATE } from './constants.js';
+import { INTEREST_RATE } from '../constants.js';
 
 const MONTHS_PER_YEAR = 12;
 
