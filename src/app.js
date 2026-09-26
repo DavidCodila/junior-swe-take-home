@@ -4,13 +4,27 @@ import { Writer } from './writer.js';
 import { Reader } from './reader.js';
 import { Validator } from './validator.js';
 import { BorrowingPowerCalculator } from './borrowingPowerCalculator.js';
+import { ApiCaller } from './apiCaller.js';
+import { MathsHelper } from './mathsHelper.js';
 
 async function start() {
     const RL = readline.createInterface({ input: process.stdin, output: process.stdout });
     const writer = new Writer(INTEREST_RATE);
     const validator = new Validator();
     const reader = new Reader(RL, validator);
-    const borrowingPowerCalculator = new BorrowingPowerCalculator();
+    const loanTermInMonths = 360; // 30 Years
+    const assessmentRateBuffer = 3.0; // 3.0% buffer added to interest rates
+    const creditCardLiabilityFactor = 0.03; // ~3%
+    const mathsHelper = 
+        new MathsHelper(creditCardLiabilityFactor, assessmentRateBuffer, loanTermInMonths);
+    const baseUrl = "http://localhost:3000/api/";
+    const bearerPAT = "Bearer pat_abcdefghijklmnopqrstuvwxyz0123456789";
+    const requestInfo = { 
+        method: 'GET', withCredentials: true, credentials: 'include', headers: {'Authorization': bearerPAT} 
+    }
+    const apiCaller = new ApiCaller(baseUrl, requestInfo);
+    const borrowingPowerCalculator = new BorrowingPowerCalculator(mathsHelper, apiCaller);
+    
     writer.intro();
     let user = await reader.getNewUser();
     let loanResult = await borrowingPowerCalculator.calculateBorrowingPower(user);
