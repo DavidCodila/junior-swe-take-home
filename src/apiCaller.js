@@ -1,19 +1,17 @@
-import { apiCall } from "./api/logic.js";
-
 export class ApiCaller {
-    baseUrl; // should be "http://localhost:3000/api/"
-    requestInfo;
+    baseUrl;
+    apiProvider;
 
-    constructor(baseUrl, requestInfo) {
+    constructor(baseUrl, apiProvider) {
         this.baseUrl = baseUrl;
-        this.requestInfo = requestInfo;
+        this.apiProvider = apiProvider;
     }
 
     
     async getAnnualTax(income) {
         return new Promise((resolve, reject) => {
             const url = this.baseUrl + "tax?income=" + income;
-            apiCall(url)
+            this.apiProvider.apiCall(url)
             .then(text => {
                 if (text.error != undefined) {
                     reject(new Error("getAnnualTax API error"));
@@ -25,8 +23,9 @@ export class ApiCaller {
     
     async getHEM(user) {
         return new Promise((resolve, reject) => {
-            const url = this.baseUrl + "hem?income=" + user.income + "&dependents=" + user.dependents;
-            apiCall(url)
+            const url = 
+                this.baseUrl + "hem?income=" + user.income + "&dependents=" + user.dependents;
+            this.apiProvider.apiCall(url)
             .then(text => {
                 if (text.error != undefined) {
                     reject(new Error("getHEM API error"));

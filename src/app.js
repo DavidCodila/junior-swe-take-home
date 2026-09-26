@@ -6,6 +6,7 @@ import { Validator } from './validator.js';
 import { BorrowingPowerCalculator } from './borrowingPowerCalculator.js';
 import { ApiCaller } from './apiCaller.js';
 import { MathsHelper } from './mathsHelper.js';
+import { ApiProvider } from './apiProvider.js';
 
 async function start() {
     const RL = readline.createInterface({ input: process.stdin, output: process.stdout });
@@ -22,7 +23,8 @@ async function start() {
     const requestInfo = { 
         method: 'GET', withCredentials: true, credentials: 'include', headers: {'Authorization': bearerPAT} 
     }
-    const apiCaller = new ApiCaller(baseUrl, requestInfo);
+    const apiProvider = new ApiProvider(requestInfo);
+    const apiCaller = new ApiCaller(baseUrl, apiProvider);
     const borrowingPowerCalculator = new BorrowingPowerCalculator(mathsHelper, apiCaller);
     
     writer.intro();
