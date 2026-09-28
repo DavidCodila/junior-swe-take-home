@@ -1,20 +1,24 @@
 {
   "type": "module",
-  "devDependencies": {
-    "mocha": "^11.8.0"
-  },
   "nyc": {
     "all": true
   },
   "scripts": {
     "api": "node src/server.js",
-    "test": "mocha test/**/**test.cjs",
+    "test": "jest test/api/apiCaller.test.cjs",
     "start": "node src/app",
     "coverage": "nyc mocha test/**",
     "coverageForLogic": "nyc mocha test/api/logic.test.cjs",
     "coverageForMathsHelper": "nyc mocha test/calculator/mathsHelper.test.cjs"
   },
   "dependencies": {
+    "@types/jest": "^30.0.0",
     "nyc": "^18.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^8.0.6",
+    "@babel/preset-env": "^8.0.6",
+    "babel-jest": "^30.5.2",
+    "jest": "^30.5.2"
   }
 }

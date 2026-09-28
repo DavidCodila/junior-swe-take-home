@@ -1,4 +1,4 @@
-export class ApiCaller {
+class ApiCaller {
     baseUrl;
     apiProvider;
 
@@ -35,3 +35,5 @@ export class ApiCaller {
         })
     }
 }
+
+module.exports = ApiCaller;

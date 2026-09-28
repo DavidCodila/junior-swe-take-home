@@ -1,4 +1,4 @@
-export class ApiProvider {
+class ApiProvider {
     requestInfo;
 
     constructor(requestInfo) {
@@ -15,3 +15,5 @@ export class ApiProvider {
     }
     
 }
+
+module.exports = ApiProvider;
