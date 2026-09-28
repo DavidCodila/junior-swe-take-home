@@ -12,6 +12,7 @@ export class MathsHelper {
         this.assessmentRateBuffer = assessmentRateBuffer;
         this.loanTermInMonths = loanTermInMonths;
     }
+    
     calculateMaxLoanAmount(maxMonthlyRepayment) {
         const assessmentRate = INTEREST_RATE + this.assessmentRateBuffer;
         const monthlyRate = (assessmentRate / 100) / MONTHS_PER_YEAR;
